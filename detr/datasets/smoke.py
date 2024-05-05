@@ -148,10 +148,11 @@ def build(image_set, args):
     root = Path(args.data_path)  #changed the root to data_path 
     assert root.exists(), f'provided Smoke path {root} does not exist' #**replaced Coco with Smoke
     mode = 'instances'
-    PATHS = {                   
-        "train": (root / "data/train_images", root / f'dataset\single-class\sc/annotations/annotation_train.json'),         #changed path to just include root for training images and json file for bounding boxes for training
-        "val": (root / "data/val_images", root / f'dataset\single-class\sc/annotations/annotation_val.json'),             #changed path to just include root for validation images and json file for bounding boxes for validation
-    }
+    PATHS = {
+    "train": ("data/train_images", "dataset/single-class/sc/annotations/annotation_train.json"),
+    "val": ("data/val_images", "dataset/single-class/sc/annotations/annotation_val.json")
+}
+
 
     img_folder, ann_file = PATHS[image_set]
     dataset = SmokeDetection(img_folder, ann_file, transforms=make_Smoke_transforms(image_set), return_masks=args.masks) #**replaced Coco with Smoke
