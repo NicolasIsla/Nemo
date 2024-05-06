@@ -17,6 +17,10 @@ if __name__ == "__main__":
     path = os.getenv('PATH_DATASET')
     if not os.path.exists(path):
         os.makedirs(path)
+    else:
+        # remove the existing directory
+        shutil.rmtree(path)
+        os.makedirs(path)
 
     file_urls = {
         'train': os.getenv("FILE_URL1_ID"),
