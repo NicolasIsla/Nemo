@@ -149,8 +149,8 @@ def build(image_set, args):
     assert root.exists(), f'provided Smoke path {root} does not exist' #**replaced Coco with Smoke
     mode = 'instances'
     PATHS = {
-    "train": ("data/train_images", "dataset/density/dg/annotations/annotation_train.json"),
-    "val": ("data/val_images", "dataset/density/dg/annotations/annotation_val.json")
+    "train": ("data/train_images", "dataset/single/sc/annotations/annotation_train.json"),
+    "val": ("data/val_images", "dataset/single-class/sc/annotations/annotation_val.json")
 }
 
 
