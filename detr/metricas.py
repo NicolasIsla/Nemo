@@ -198,7 +198,7 @@ def main(args):
 
     print("Start training")
     start_time = time.time()
-    for epoch in range(args.start_epoch, args.epochs):
+    for epoch in range(10):
         # if args.distributed:
         #     sampler_train.set_epoch(epoch)
         # train_stats = train_one_epoch(
@@ -218,7 +218,7 @@ def main(args):
         #             'epoch': epoch,
         #             'args': args,
         #         }, checkpoint_path)
-
+        print("hola mundo")
         test_stats, coco_evaluator = evaluate(
             model, criterion, postprocessors, data_loader_val, base_ds, device, args.output_dir
         )
