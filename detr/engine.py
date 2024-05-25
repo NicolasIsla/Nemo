@@ -164,7 +164,6 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
 
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
-        print("test")
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
