@@ -143,26 +143,26 @@ def main(args):
     dataset_val = build_dataset(image_set='val', args=args)
 
     if args.distributed:
-        sampler_train = DistributedSampler(dataset_train)
+        # sampler_train = DistributedSampler(dataset_train)
         sampler_val = DistributedSampler(dataset_val, shuffle=False)
     else:
-        sampler_train = torch.utils.data.RandomSampler(dataset_train)
+        # sampler_train = torch.utils.data.RandomSampler(dataset_train)
         sampler_val = torch.utils.data.SequentialSampler(dataset_val)
 
-    batch_sampler_train = torch.utils.data.BatchSampler(
-        sampler_train, args.batch_size, drop_last=True)
+    # batch_sampler_train = torch.utils.data.BatchSampler(
+        # sampler_train, args.batch_size, drop_last=True)
 
-    data_loader_train = DataLoader(dataset_train, batch_sampler=batch_sampler_train,
-                                   collate_fn=utils.collate_fn, num_workers=args.num_workers)
+    # data_loader_train = DataLoader(dataset_train, batch_sampler=batch_sampler_train,
+                                #    collate_fn=utils.collate_fn, num_workers=args.num_workers)
     data_loader_val = DataLoader(dataset_val, args.batch_size, sampler=sampler_val,
                                  drop_last=False, collate_fn=utils.collate_fn, num_workers=args.num_workers)
 
-    if args.dataset_file == "coco_panoptic":
+    # if args.dataset_file == "coco_panoptic":
         # We also evaluate AP during panoptic training, on original coco DS
-        coco_val = datasets.coco.build("val", args)
-        base_ds = get_coco_api_from_dataset(coco_val)
-    else:
-        base_ds = get_coco_api_from_dataset(dataset_val)
+        # coco_val = datasets.coco.build("val", args)
+        # base_ds = get_coco_api_from_dataset(coco_val)
+    # else:
+    base_ds = get_coco_api_from_dataset(dataset_val)
 
     if args.frozen_weights is not None:
         checkpoint = torch.load(args.frozen_weights, map_location='cpu')
@@ -196,9 +196,9 @@ def main(args):
             utils.save_on_master(coco_evaluator.coco_eval["bbox"].eval, output_dir / "eval.pth")
         return
 
-    print("Start training")
+    print("Start testing")
     start_time = time.time()
-    for epoch in range(10):
+    for epoch in range(1):
         # if args.distributed:
         #     sampler_train.set_epoch(epoch)
         # train_stats = train_one_epoch(
@@ -245,7 +245,7 @@ def main(args):
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
-    print('Training time {}'.format(total_time_str))
+    print('testing time {}'.format(total_time_str))
 
 
 if __name__ == '__main__':
