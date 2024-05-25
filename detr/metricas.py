@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader, DistributedSampler
 import datasets
 import util.misc as utils
 from datasets import build_dataset, get_coco_api_from_dataset
-from engine import evaluate, train_one_epoch
+from engine import evaluate, train_one_epoch, metrics
 from models import build_model
 
 
@@ -218,8 +218,7 @@ def main(args):
         #             'epoch': epoch,
         #             'args': args,
         #         }, checkpoint_path)
-        print("hola mundo")
-        test_stats, coco_evaluator = evaluate(
+        test_stats, coco_evaluator = metrics(
             model, criterion, postprocessors, data_loader_val, base_ds, device, args.output_dir
         )
 
