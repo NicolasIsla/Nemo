@@ -162,12 +162,10 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
     iou_types = tuple(k for k in ('segm', 'bbox') if k in postprocessors.keys())
     print(iou_types[0])
     coco_evaluator = CocoEvaluator(base_ds, iou_types)
-    # coco_evaluator.coco_eval[iou_types[0]].params.iouThrs = [0.3, 0.5, 0.75, 1]
-    # save the iou thresholds
+    coco_evaluator.coco_eval[iou_types[0]].params.iouThrs = np.array([0.3, 0.5, 0.75, 0.99])
     
     # print(coco_evaluator.coco_eval[iou_types[0]].params.iouThrs)
 
-    np.save('iouThrs.npy', coco_evaluator.coco_eval[iou_types[0]].params.iouThrs)
 
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
