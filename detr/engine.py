@@ -161,7 +161,7 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
     iou_types = tuple(k for k in ('segm', 'bbox') if k in postprocessors.keys())
     print(iou_types[0])
     coco_evaluator = CocoEvaluator(base_ds, iou_types)
-    # coco_evaluator.coco_eval[iou_types[0]].params.iouThrs = [0, 0.1, 0.5, 0.3]
+    coco_evaluator.coco_eval[iou_types[0]].params.iouThrs = [0.3, 0.5, 0.75, 1]
     print(coco_evaluator.coco_eval[iou_types[0]].params.iouThrs)
 
 
