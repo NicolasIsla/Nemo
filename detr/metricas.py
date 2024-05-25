@@ -219,7 +219,7 @@ def main(args):
         #             'args': args,
         #         }, checkpoint_path)
         test_stats, coco_evaluator = metrics(
-            model, criterion, postprocessors, data_loader_val, base_ds, device, args.output_dir
+            model, postprocessors, data_loader_val, base_ds, device, args.output_dir
         )
 
         log_stats = {
