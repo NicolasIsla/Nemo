@@ -160,7 +160,7 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
 
     iou_types = tuple(k for k in ('segm', 'bbox') if k in postprocessors.keys())
     coco_evaluator = CocoEvaluator(base_ds, iou_types)
-    # coco_evaluator.coco_eval[iou_types[0]].params.iouThrs = [0, 0.1, 0.5, 0.75]
+    coco_evaluator.coco_eval[iou_types[0]].params.iouThrs = [0, 0.1, 0.5, 0.75]
 
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
@@ -189,7 +189,6 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
     if coco_evaluator is not None:
         coco_evaluator.accumulate()
         coco_evaluator.summarize()
-    panoptic_res = None
     stats = {k: meter.global_avg for k, meter in metric_logger.meters.items()}
     if coco_evaluator is not None:
         if 'bbox' in postprocessors.keys():
