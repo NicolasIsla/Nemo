@@ -189,6 +189,6 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
         # if coco_evaluator is not None:
         #     coco_evaluator.update(res)
 
-    # print(predicciones)
-    with open("predicciones.json", "w") as f:
-        json.dump(predicciones, f)
+    print(predicciones)
+    # with open("predicciones.json", "w") as f:
+        # json.dump(predicciones, f)
