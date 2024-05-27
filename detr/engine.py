@@ -8,7 +8,7 @@ import sys
 from typing import Iterable
 
 import torch
-
+import json
 import util.misc as utils
 from datasets.coco_eval import CocoEvaluator
 from datasets.panoptic_eval import PanopticEvaluator
@@ -180,28 +180,14 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
         # print(np.shape(results))
         
         res = {target['image_id'].item(): output for target, output in zip(targets, results)}
-        predicciones_1 = {
+        pred_samples = {
             target['image_id'].item(): output["boxes"][output["labels"] == 1]
             for target, output in zip(targets, results)
         }
-        print(predicciones_1)
-        break
+        predicciones.update(pred_samples)
         
-        if coco_evaluator is not None:
-            coco_evaluator.update(res)
+        # if coco_evaluator is not None:
+        #     coco_evaluator.update(res)
 
-    # gather the stats from all processes
-    metric_logger.synchronize_between_processes()
-    print("Averaged stats:", metric_logger)
-    if coco_evaluator is not None:
-        coco_evaluator.synchronize_between_processes()
-
-    # accumulate predictions from all images
-    if coco_evaluator is not None:
-        coco_evaluator.accumulate()
-        coco_evaluator.summarize()
-    stats = {k: meter.global_avg for k, meter in metric_logger.meters.items()}
-    if coco_evaluator is not None:
-        if 'bbox' in postprocessors.keys():
-            stats['coco_eval_bbox'] = coco_evaluator.coco_eval['bbox'].stats.tolist()
-    return stats, coco_evaluator
+    with open('predicciones.json', 'w') as json_file:
+        json.dump(predicciones, json_file)
