@@ -177,10 +177,11 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
 
         orig_target_sizes = torch.stack([t["orig_size"] for t in targets], dim=0)
         results = postprocessors['bbox'](outputs, orig_target_sizes)
-        if 'segm' in postprocessors.keys():
-            target_sizes = torch.stack([t["size"] for t in targets], dim=0)
-            results = postprocessors['segm'](results, outputs, orig_target_sizes, target_sizes)
+        # print(np.shape(results))
+        
         res = {target['image_id'].item(): output for target, output in zip(targets, results)}
+        print(res)
+        
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
