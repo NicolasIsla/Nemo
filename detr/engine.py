@@ -181,7 +181,7 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
         
         res = {target['image_id'].item(): output for target, output in zip(targets, results)}
         print(targets)
-        print(results)
+        print(outputs)
         break
         
         if coco_evaluator is not None:
