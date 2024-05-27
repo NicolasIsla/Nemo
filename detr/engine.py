@@ -167,7 +167,7 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
     # print(coco_evaluator.coco_eval[iou_types[0]].params.iouThrs)
 
 
-
+    predicciones = {}
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
@@ -180,8 +180,11 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
         # print(np.shape(results))
         
         res = {target['image_id'].item(): output for target, output in zip(targets, results)}
-        print(targets)
-        print(res)
+        predicciones_1 = {
+            target['image_id'].item(): output["boxes"][output["labels"] == 1]
+            for target, output in zip(targets, results)
+        }
+        print(predicciones_1)
         break
         
         if coco_evaluator is not None:
