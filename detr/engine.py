@@ -180,7 +180,8 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
         # print(np.shape(results))
         
         res = {target['image_id'].item(): output for target, output in zip(targets, results)}
-        print(res)
+        print(targets.keys())
+        print(results.keys())
         
         if coco_evaluator is not None:
             coco_evaluator.update(res)
