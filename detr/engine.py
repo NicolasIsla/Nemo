@@ -181,7 +181,7 @@ def metrics(model, postprocessors, data_loader, base_ds, device, output_dir):
         
         res = {target['image_id'].item(): output for target, output in zip(targets, results)}
         pred_samples = {
-            target['image_id'].item(): output["boxes"][output["labels"] == 1].cpu().numpy()
+            target['image_id'].item(): output["boxes"][output["labels"] == 1].cpu().tolist()
             for target, output in zip(targets, results)
         }
         predicciones.update(pred_samples)
